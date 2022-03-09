@@ -1,6 +1,7 @@
 package main
 
 import (
+	"github.com/gin-contrib/cors"
 	"github.com/gin-gonic/gin"
 	"github.com/indeedhat/todo/internal/controllers"
 	"github.com/indeedhat/todo/internal/env"
@@ -18,6 +19,10 @@ func main() {
 	}
 
 	router := gin.Default()
+
+	corsConf := cors.DefaultConfig()
+	corsConf.AllowAllOrigins = true
+	router.Use(cors.New(corsConf))
 
 	_ = controllers.NewLists(router, db)
 	_ = controllers.NewEntries(router, db)
